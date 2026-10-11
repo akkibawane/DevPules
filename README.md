@@ -1,4 +1,17 @@
-# DevPulse � Engineering Intelligence Platform
+﻿# DevPulse – Engineering Intelligence Platform
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Website-00C853?style=for-the-badge&logo=googlechrome&logoColor=white)](https://akkibawane.github.io/DevPules/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/akkibawane/DevPules)
+[![Deploy DevPulse to GitHub Pages](https://github.com/akkibawane/DevPules/actions/workflows/deploy.yml/badge.svg)](https://github.com/akkibawane/DevPules/actions/workflows/deploy.yml)
+
+> 🚀 **Live Deployment URL**: **[https://akkibawane.github.io/DevPules/](https://akkibawane.github.io/DevPules/)**  
+> 📁 **GitHub Source Code**: **[https://github.com/akkibawane/DevPules](https://github.com/akkibawane/DevPules)**
+
+Real-time developer productivity and engineering telemetry dashboard built with **React 19**, **Spring Boot 3 (Java 21)**, **STOMP WebSockets**, and **Redis Pub/Sub**.
+
+---
+
+# DevPulse – Engineering Intelligence Platform
 
 [![Deploy DevPulse to GitHub Pages](https://github.com/akkibawane/DevPules/actions/workflows/deploy.yml/badge.svg)](https://github.com/akkibawane/DevPules/actions/workflows/deploy.yml)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online-brightgreen?style=flat&logo=github)](https://akkibawane.github.io/DevPules/)
@@ -17,7 +30,7 @@
 ?? **GitHub Repository**: [https://github.com/akkibawane/DevPules](https://github.com/akkibawane/DevPules)
 
 ---
-## ⚡ Overview
+## âš¡ Overview
 
 DevPulse bridges the gap between software development operations and engineering intelligence. It aggregates signals across the entire SDLC:
 - **CI/CD Pipelines**: GitHub Actions & Jenkins real-time build streaming, stage progress, duration, and failure alerts.
@@ -29,41 +42,41 @@ DevPulse bridges the gap between software development operations and engineering
 
 ---
 
-## 🏛️ System Architecture
+## ðŸ›ï¸ System Architecture
 
 ```
  GitHub / Jenkins Webhooks
-            │
-            ▼
-┌────────────────────────────────────────────────────────┐
-│              Spring Boot 3 Event Engine               │
-│                                                        │
-│  [REST Controllers]  [Webhook Ingest]  [Simulator]     │
-└───────────┬─────────────────────────────────┬──────────┘
-            │                                 │
-            ▼                                 ▼
-┌───────────────────────┐         ┌───────────────────────┐
-│     Redis Stream      │         │       H2 / MySQL      │
-│   Pub/Sub + Caching   │         │    JPA Persistence    │
-│  (devpulse.events)    │         │ (Deployments, Builds) │
-└───────────┬───────────┘         └───────────────────────┘
-            │
-            ▼
-┌────────────────────────────────────────────────────────┐
-│            Spring STOMP WebSocket Broker               │
-│  (/topic/metrics, /topic/builds, /topic/deployments)   │
-└───────────────────────────┬────────────────────────────┘
-                            │ (Real-Time Push)
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│             React 19 Client Dashboard                  │
-│       (Vite + Tailwind CSS + Recharts + Lucide)        │
-└────────────────────────────────────────────────────────┘
+            â”‚
+            â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚              Spring Boot 3 Event Engine               â”‚
+â”‚                                                        â”‚
+â”‚  [REST Controllers]  [Webhook Ingest]  [Simulator]     â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+            â”‚                                 â”‚
+            â–¼                                 â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚     Redis Stream      â”‚         â”‚       H2 / MySQL      â”‚
+â”‚   Pub/Sub + Caching   â”‚         â”‚    JPA Persistence    â”‚
+â”‚  (devpulse.events)    â”‚         â”‚ (Deployments, Builds) â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+            â”‚
+            â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚            Spring STOMP WebSocket Broker               â”‚
+â”‚  (/topic/metrics, /topic/builds, /topic/deployments)   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                            â”‚ (Real-Time Push)
+                            â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚             React 19 Client Dashboard                  â”‚
+â”‚       (Vite + Tailwind CSS + Recharts + Lucide)        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### 1. Prerequisites
 - **Java 21+** (`java -version`)
@@ -103,7 +116,7 @@ docker-compose up --build
 
 ---
 
-## 📡 WebSocket Topics
+## ðŸ“¡ WebSocket Topics
 
 | Destination | Payload | Description |
 |---|---|---|
@@ -116,7 +129,7 @@ docker-compose up --build
 
 ---
 
-## 🧪 Interactive Simulation Bar
+## ðŸ§ª Interactive Simulation Bar
 DevPulse includes a built-in event simulator. In the UI, click:
 - **Simulate Deploy**: Roll out a new microservice version to canary or production.
 - **Run Pipeline**: Trigger a GitHub Actions or Jenkins build.
@@ -125,31 +138,31 @@ DevPulse includes a built-in event simulator. In the UI, click:
 
 ---
 
-## 📂 Project Structure
+## ðŸ“‚ Project Structure
 ```
 devpulse/
-├── backend/                  # Spring Boot 3 + Java 21 Application
-│   ├── src/main/java/com/devpulse/
-│   │   ├── config/           # WebSocket, Redis, CORS configs
-│   │   ├── controller/       # Dashboard, Webhook, Simulation endpoints
-│   │   ├── model/            # JPA entities & DTOs
-│   │   ├── repository/       # Spring Data JPA repositories
-│   │   ├── service/          # Event processing, Redis pub/sub, Simulator
-│   │   └── websocket/        # STOMP message broadcaster
-│   ├── pom.xml
-│   └── Dockerfile
-├── frontend/                 # React 19 + Vite Application
-│   ├── src/
-│   │   ├── components/       # MetricCards, PipelineStream, ApiHealthGrid, etc.
-│   │   ├── hooks/            # useWebSocket STOMP hook
-│   │   ├── services/         # REST API client
-│   │   ├── App.jsx
-│   │   └── index.css
-│   ├── package.json
-│   ├── vite.config.js
-│   └── Dockerfile
-├── .github/workflows/        # GitHub Actions CI workflow
-├── Jenkinsfile               # Jenkins declarative pipeline
-└── docker-compose.yml        # Multi-container orchestration
+â”œâ”€â”€ backend/                  # Spring Boot 3 + Java 21 Application
+â”‚   â”œâ”€â”€ src/main/java/com/devpulse/
+â”‚   â”‚   â”œâ”€â”€ config/           # WebSocket, Redis, CORS configs
+â”‚   â”‚   â”œâ”€â”€ controller/       # Dashboard, Webhook, Simulation endpoints
+â”‚   â”‚   â”œâ”€â”€ model/            # JPA entities & DTOs
+â”‚   â”‚   â”œâ”€â”€ repository/       # Spring Data JPA repositories
+â”‚   â”‚   â”œâ”€â”€ service/          # Event processing, Redis pub/sub, Simulator
+â”‚   â”‚   â””â”€â”€ websocket/        # STOMP message broadcaster
+â”‚   â”œâ”€â”€ pom.xml
+â”‚   â””â”€â”€ Dockerfile
+â”œâ”€â”€ frontend/                 # React 19 + Vite Application
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ components/       # MetricCards, PipelineStream, ApiHealthGrid, etc.
+â”‚   â”‚   â”œâ”€â”€ hooks/            # useWebSocket STOMP hook
+â”‚   â”‚   â”œâ”€â”€ services/         # REST API client
+â”‚   â”‚   â”œâ”€â”€ App.jsx
+â”‚   â”‚   â””â”€â”€ index.css
+â”‚   â”œâ”€â”€ package.json
+â”‚   â”œâ”€â”€ vite.config.js
+â”‚   â””â”€â”€ Dockerfile
+â”œâ”€â”€ .github/workflows/        # GitHub Actions CI workflow
+â”œâ”€â”€ Jenkinsfile               # Jenkins declarative pipeline
+â””â”€â”€ docker-compose.yml        # Multi-container orchestration
 ```
 
