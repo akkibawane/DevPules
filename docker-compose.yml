@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # 1. Redis In-Memory Stream Broker & Cache
+  redis:
+    image: redis:7.2-alpine
+    container_name: devpulse-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - devpulse-network
+
+  # 2. MySQL Relational Store
+  mysql:
+    image: mysql:8.0
+    container_name: devpulse-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: devpulsedb
+      MYSQL_USER: devpulse
+      MYSQL_PASSWORD: devpulsepassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devpulse-network
+
+  # 3. Spring Boot 3 Real-Time Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devpulse-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devpulsedb?createDatabaseIfNotExist=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=devpulse
+      - SPRING_DATASOURCE_PASSWORD=devpulsepassword
+    depends_on:
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    networks:
+      - devpulse-network
+
+  # 4. React 19 / Vite Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: devpulse-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - devpulse-network
+
+volumes:
+  redis-data:
+  mysql-data:
+
+networks:
+  devpulse-network:
+    driver: bridge

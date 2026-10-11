@@ -1,0 +1,64 @@
+name: DevPulse CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Job 1: Build and Test Spring Boot 3 Backend
+  backend-build:
+    name: Backend CI (Java 21 & Spring Boot)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up OpenJDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: |
+          cd backend
+          mvn clean test
+
+      - name: DevPulse Webhook Telemetry Dispatch
+        if: always()
+        run: |
+          curl -X POST "${{ secrets.DEVPULSE_WEBHOOK_URL || 'http://localhost:8080/api/v1/webhooks/github' }}" \
+            -H "Content-Type: application/json" \
+            -H "X-GitHub-Event: push" \
+            -d '{"repository":"devpulse/backend","branch":"${{ github.ref_name }}","pusher":"${{ github.actor }}","message":"${{ github.event.head_commit.message }}","commit":"${{ github.sha }}"}' \
+            || true
+
+  # Job 2: Build and Lint React Frontend
+  frontend-build:
+    name: Frontend CI (React 19 & Vite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build React Vite Bundle
+        run: |
+          cd frontend
+          npm run build
